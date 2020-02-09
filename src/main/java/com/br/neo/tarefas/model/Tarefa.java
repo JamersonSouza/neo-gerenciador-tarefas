@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "gerenciador_tarefas")
+@Table(name = "tarefas")
 public class Tarefa {
 	
 	@Id
@@ -21,7 +21,7 @@ public class Tarefa {
 	private String titulo;
 	@Column(name = "descricao", nullable = true, length = 100)
 	private String descricao;
-	@Column(name = "data_expiracao", nullable = false)
+	@Column(name = "dataExpiracao",nullable = false)
 	private Date dataExpiracao;
 	@Column(name = "situacao", nullable = false)
 	private Boolean situacao = false;
