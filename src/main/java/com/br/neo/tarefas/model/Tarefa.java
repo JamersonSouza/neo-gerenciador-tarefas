@@ -9,18 +9,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "tarefas")
 public class Tarefa {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "titulo", nullable = false, length = 50)
 	private String titulo;
 	@Column(name = "descricao", nullable = true, length = 100)
 	private String descricao;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "dataExpiracao",nullable = false)
 	private Date dataExpiracao;
 	@Column(name = "situacao", nullable = false)

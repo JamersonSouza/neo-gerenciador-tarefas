@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Gerenciador de Tarefas - Inclusão</title>
+<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+
+	<div th:replace="fragmentos/fragmentos :: cabecalho"></div>
+<div class="container-fluid" style="margin: 0 auto; text-align: center;"> 
+	<h3>Insira uma nova Tarefa</h3>
+
+	<form class="form-horizontal" action="/tarefas/inserir" method="post" th:object="${tarefa}">
+		<div class="row">
+			<div class="form-group col-lg-4 offset-md-4 col-md-6 col-sm-12">
+				<label>Título</label>
+					<input type="text" class="form-control" th:field="*{titulo}">
+			</div>
+		</div>	
+		
+		<div class="row">
+			<div class="form-group col-lg-4 col-md-6 offset-md-4 col-sm-12">
+				<label>Descrição</label>
+					<input type="text" class="form-control" th:field="*{descricao}">
+			</div>
+		</div>	
+		
+		<div class="row">
+			<div class="form-group col-lg-4 col-md-6 offset-md-4 col-sm-12">
+				<label>Data de Expiração</label>
+					<input type="date" class="form-control" th:field="*{dataExpiracao}">
+			</div>
+		</div>	
+
+		<button type="submit" class="btn btn-success w-25">SALVAR</button>
+			
+	</form>
+</div>
+	<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
