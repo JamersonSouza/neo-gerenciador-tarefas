@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -55,6 +56,33 @@ public class TarefaController {
 		}
 		
 		return mv;
-}
+	}
+	
+	@GetMapping("/alterar/{id}")
+	public ModelAndView alterar(@PathVariable("id") Long id) {
+		ModelAndView mv = new ModelAndView();
+		Tarefa tarefa = repositorioTarefa.getOne(id);
+		mv.addObject("tarefa", tarefa);
+		mv.setViewName("tarefas/alterar");
+		return mv;
+	}
+	
+	@PostMapping("/alterar")
+	public ModelAndView alterar(@Valid Tarefa tarefa, BindingResult br) {
+		ModelAndView mv = new ModelAndView();
+		if(tarefa.getDataExpiracao() == null) {
+			br.rejectValue("dataExpiracao", "tarefa.dataExpiracaoInvalida", ""
+					+ "A data de Expiração esta Inválida ou Vazia.");
+		}
+		if(br.hasErrors()) {
+			mv.setViewName("tarefas/alterar");
+			mv.addObject(tarefa);
+		}else {
+		mv.setViewName("redirect:/tarefas/listar");
+		repositorioTarefa.save(tarefa);
+		}
+		
+		return mv;
+	}
 
 }

@@ -25,6 +25,12 @@
 								<p class="card-text" th:text="${'Data de Expiração: ' + 
 								#dates.format(tarefa.dataExpiracao, 'dd/MM/yyyy')}"></p>						
 						</div>
+						<div class="card-footer bg-dark">
+							<p>
+								<a style="color: #fff;" 
+								th:href="@{/tarefas/alterar/{id}(id=${tarefa.id})}">Alterar</a>
+							</p>
+						</div>
 					</div>
 				</div>
 		</div>
