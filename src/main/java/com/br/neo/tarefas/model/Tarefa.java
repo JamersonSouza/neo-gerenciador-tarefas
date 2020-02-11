@@ -35,7 +35,8 @@ public class Tarefa {
 	private String descricao;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "dataExpiracao",nullable = false)
-	@FutureOrPresent(message = "A data de expiração não pode ser anterior a data atual.")
+//	FOI NECESSÁRIO TIRAR ESTA VALIDAÇÃO POIS ESTAVA ATRAPALHANDO QUANDO TENTAVA CONCLUIR A TAREFA
+//	@FutureOrPresent(message = "A data de expiração não pode ser anterior a data atual.")
 	private Date dataExpiracao;
 	@Column(name = "situacao", nullable = false)
 	private Boolean situacao = false;

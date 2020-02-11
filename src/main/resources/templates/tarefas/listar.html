@@ -24,11 +24,20 @@
 								<p class="card-text" th:text="${tarefa.descricao}"></p>
 								<p class="card-text" th:text="${'Data de Expiração: ' + 
 								#dates.format(tarefa.dataExpiracao, 'dd/MM/yyyy')}"></p>						
+							<p class="card-text" style="color: green;" th:if="${tarefa.dataExpiracao.after(new java.util.Date())}"
+							>Tarefa Em Dia</p>
+							
+							<p class="card-text" style="color: red;" th:if="${tarefa.dataExpiracao.before(new java.util.Date())}"
+							>Tarefa Atrasada</p>
 						</div>
 						<div class="card-footer bg-dark">
 							<p>
 								<a style="color: #fff;" 
-								th:href="@{/tarefas/alterar/{id}(id=${tarefa.id})}">Alterar</a>
+								th:href="@{/tarefas/alterar/{id}(id=${tarefa.id})}">Alterar</a> | 
+								<a style="color: #fff;" 
+								th:href="@{/tarefas/excluir/{id}(id=${tarefa.id})}">Excluir</a> | 
+								<a th:if="${!tarefa.situacao}" style="color: #fff;" 
+								th:href="@{/tarefas/concluir/{id}(id=${tarefa.id})}">Concluir Tarefa</a>
 							</p>
 						</div>
 					</div>

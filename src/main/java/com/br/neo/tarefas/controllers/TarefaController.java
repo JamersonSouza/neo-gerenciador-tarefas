@@ -84,5 +84,19 @@ public class TarefaController {
 		
 		return mv;
 	}
+	@GetMapping("/excluir/{id}")
+	public String excluirTarefa(@PathVariable("id") Long id) {
+		repositorioTarefa.deleteById(id);
+		return "redirect:/tarefas/listar";
+	}
+	
+	@GetMapping("/concluir/{id}")
+	public String concluirTarefa(@PathVariable("id") Long id) {
+		Tarefa tarefa = repositorioTarefa.getOne(id);
+		tarefa.setSituacao(true);
+		repositorioTarefa.save(tarefa);
+		return "redirect:/tarefas/listar";
+		
+	}
 
 }
