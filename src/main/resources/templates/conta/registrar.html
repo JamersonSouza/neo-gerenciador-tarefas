@@ -2,12 +2,12 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<title>Gerenciador de Tarefas - Criar Conta</title>
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<title>Gerenciador de Tarefas - Login</title>
 </head>
 <body>
 
@@ -15,41 +15,34 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">Gerenciador de Tarefas</a>
 	</nav>
+<div class="container-fluid" style="margin: 0 auto; text-align: center;"> 
+	<h3>Crie sua conta</h3>
 
-	<div class="container" style="margin: 40px; padding: 0 20px;">
-		<h3>Login</h3>
-		<form action="/login" method="post" class="form-signin" >
-			<div class="form-group">
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<input type="text" class="form-control"
-						placeholder="exemple@gmail.com" name="email">
-				</div>
+	<form class="form-horizontal" action="/registration" method="post" th:object="${usuario}">
+		<div class="row">
+			<div class="form-group col-lg-4 offset-md-4 col-md-6 col-sm-12">
+					<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('email')}">
+						<label th:errors="*{email}" class="validation-message"></label>
+					</div>
+				<label>Email</label>
+					<input type="email" class="form-control" th:field="*{email}">
 			</div>
+		</div>	
+		
+		<div class="row">
+			<div class="form-group col-lg-4 col-md-6 offset-md-4 col-sm-12">
+			<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('senha')}">
+						<label th:errors="*{senha}" class="validation-message"></label>
+					</div>
+				<label>Senha</label>
+					<input type="password" class="form-control" th:field="*{senha}">
+			</div>
+		</div>	
 
-			<div class="form-group">
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<input type="password" class="form-control"
-						placeholder="digite sua senha" name="senha">
-				</div>
-			</div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-success w-25">LOGIN</button>
-			</div>
-			<!-- Em caso de Erros -->
-			<div class="form-group">
-				<div class="col-md-9">
-					<div class="alert alert-danger" th:if="${param.error}" role="alert">
-						Não foi possível fazer login.</div>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<span>Não possui conta? <a href="/registration">Cadastre-se!</a>
-				</span>
-			</div>
-		</form>
-
-	</div>
+		<button type="submit" class="btn btn-success w-25">Criar Conta!</button>
+			
+	</form>
+</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -58,7 +51,6 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-
 	<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
 	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>

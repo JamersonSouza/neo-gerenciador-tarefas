@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.WebJarsResourceResolver;
 
 @Configuration
 public class SecurityConfig  extends WebSecurityConfigurerAdapter{
@@ -44,8 +47,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/login").permitAll()
-			.antMatchers("/webjars/**").permitAll()
+			.antMatchers("/login", "/webjars/**").permitAll()
 			.antMatchers("/registration").permitAll()
 			.anyRequest()
 				.authenticated()
@@ -58,10 +60,11 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 						
 					
 	}
-	
+//	METODO ABAIXO NÃO FUNCIONA, FOI NECESSÁRIO USAR CDN DO BOOTSTRAP POIS O SPRING SECURITY
+//	ESTA BLOQUEANDO O ACESSO AO WEBJARS. AINDA NÃO DESCOBRI COMO RESOLVER
 	@Override
 	public void configure(WebSecurity web) throws Exception{
-		web.ignoring().antMatchers("/webjars/**");
+		web.ignoring().antMatchers("/webjars/**, /resources/**");
 	}
 	
 }
