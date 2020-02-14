@@ -2,6 +2,7 @@ package com.br.neo.tarefas.controllers;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.br.neo.tarefas.dao.TarefaDao;
 import com.br.neo.tarefas.model.Tarefa;
+import com.br.neo.tarefas.model.Usuario;
+import com.br.neo.tarefas.service.ServicoUsuario;
 
 @Controller
 @RequestMapping("/tarefas")
@@ -22,12 +25,16 @@ public class TarefaController {
 
 	@Autowired
 	private TarefaDao repositorioTarefa;
+	
+	@Autowired
+	private ServicoUsuario servicoUsuario;
 
 	@GetMapping("/listar")
-	public ModelAndView listar() {
+	public ModelAndView listar(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("tarefas/listar");
-		mv.addObject("tarefas", repositorioTarefa.findAll());
+		String emailUsuario = request.getUserPrincipal().getName();
+		mv.addObject("tarefas", repositorioTarefa.carregarTarefasPorUsuario(emailUsuario));
 		return mv;
 
 	}
@@ -41,7 +48,7 @@ public class TarefaController {
 	}
 	
 	@PostMapping("/inserir")
-	public ModelAndView inserir(@Valid Tarefa tarefa, BindingResult br) {
+	public ModelAndView inserir(@Valid Tarefa tarefa, BindingResult br, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(tarefa.getDataExpiracao() == null) {
 			br.rejectValue("dataExpiracao", "tarefa.dataExpiracaoInvalida", ""
@@ -51,6 +58,9 @@ public class TarefaController {
 			mv.setViewName("tarefas/inserir");
 			mv.addObject(tarefa);
 		}else {
+		String emailUsuario = request.getUserPrincipal().getName();
+		Usuario usuarioLogado = servicoUsuario.encontrarPorEmail(emailUsuario);
+		tarefa.setUsuario(usuarioLogado);
 		mv.setViewName("redirect:/tarefas/listar");
 		repositorioTarefa.save(tarefa);
 		}
